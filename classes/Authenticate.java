@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Authenticate {
-    public static User login(List<User> users, String email, String password) throws Exception{
+    public static User login(List<User> users, String name, String password) throws Exception{
 
         for(User user : users){
-            if(user.getEmail().equals(email) && user.authenticatePassword(password)){
+            if(user.getName().equals(name) && user.authenticatePassword(password)){
                 return user;
             }
         }
