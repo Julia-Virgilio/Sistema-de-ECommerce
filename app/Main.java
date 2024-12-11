@@ -1,10 +1,6 @@
 package app;
 
-import classes.Admin;
-import classes.Customer;
-import classes.Authenticate;
-import classes.User;
-import classes.FileHandler;
+import classes.*;
 
 import java.util.Scanner;
 import java.util.List;
@@ -14,8 +10,16 @@ public class Main {
 
     public static void main(String[] args) {
         List<User> users;
+        List<Product> products;
         boolean login = false;
         User loggedUser = null;
+
+        try {
+            products = FileHandler.loadProducts();
+        } catch (Exception e) {
+            System.out.println("No products found. Starting with an empty list.");
+            products = new ArrayList<>();
+        }
 
         try {
             users = FileHandler.loadUsers();
@@ -59,7 +63,7 @@ public class Main {
                     try {
                         System.out.println("Welcome! Please login:");
 
-                        System.out.print("Email: ");
+                        System.out.print("Name: ");
                         String email = scanner.nextLine();
 
                         System.out.print("Password: ");
@@ -75,9 +79,10 @@ public class Main {
                 }
 
                 if (loggedUser instanceof Admin) {
-                    adminMenu(scanner, users, loggedUser);
+                    Admin.adminMenu(scanner, users, products, loggedUser);
+
                 } else if (loggedUser instanceof Customer) {
-                    customerMenu(scanner, (Customer) loggedUser);
+                    Customer.customerMenu(scanner, (Customer) loggedUser);
                 }
 
                 login = false;
@@ -86,70 +91,12 @@ public class Main {
         }
         try {
             FileHandler.saveUsers(users);
+            FileHandler.saveProducts(products);
         } catch (Exception e) {
             System.out.println("Error saving users: " + e.getMessage());
         }
     }
 
-    private static void adminMenu(Scanner scanner, List<User> users, User loggedUser) {
-        int option = 0;
-
-        do {
-            System.out.println("\nWelcome, administrator " + loggedUser.getName());
-            System.out.println("1. Create new user");
-            System.out.println("2. View all users");
-            System.out.println("3. Exit to main menu");
-
-            System.out.print("Choose an option: ");
-            try {
-                option = Integer.parseInt(scanner.nextLine());
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter a number.");
-                continue;
-            }
-
-            switch (option) {
-                case 1:
-                    break;
-                case 2:
-                
-                    break;
-                case 3:
-                    System.out.println("Returning to main menu.");
-                    break;
-                default:
-                    System.out.println("Invalid option.");
-            }
-        } while (option != 3);
-    }
 
 
-    private static void customerMenu(Scanner scanner, Customer customer) {
-        int option = 0;
-        do {
-            System.out.println("\nWelcome, " + customer.getName() + "! How can we help you?");
-            System.out.println("1. View profile");
-            System.out.println("2. Exit to main menu");
-
-            System.out.print("Choose an option: ");
-            try {
-                option = Integer.parseInt(scanner.nextLine());
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter a number.");
-                continue;
-            }
-
-            switch (option) {
-                case 1:
-                    System.out.println("\nProfile Information:");
-                    System.out.println(customer);
-                    break;
-                case 2:
-                    System.out.println("Returning to main menu.");
-                    break;
-                default:
-                    System.out.println("Invalid option.");
-            }
-        } while (option != 2);
-    }
 }
