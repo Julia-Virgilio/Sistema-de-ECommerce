@@ -5,42 +5,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileHandler {
-    private static final String USERS_FILE = "users.dat";
-    private static final String PRODUCTS_FILE = "products.dat";
+    private static final String DATA_FILE = "data.dat";
 
-    public static void saveUsers(List<User> users) throws IOException {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(USERS_FILE))) {
-            oos.writeObject(users);
+    public static void saveData(List<User> users, List<Product> products) throws IOException {
+        Container container = new Container(users, products);
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(DATA_FILE))) {
+            oos.writeObject(container);
         }
     }
 
-    public static List<User> loadUsers() throws IOException, ClassNotFoundException {
-        File file = new File(USERS_FILE);
+    public static Container loadData() throws IOException, ClassNotFoundException {
+        File file = new File(DATA_FILE);
 
         if (!file.exists()) {
-            return new ArrayList<>();
+            return new Container(new ArrayList<>(), new ArrayList<>());
         }
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
-            return (List<User>) ois.readObject();
-        }
-    }
-
-    public static void saveProducts(List<Product> products) throws IOException {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(PRODUCTS_FILE))) {
-            oos.writeObject(products);
-        }
-    }
-
-    public static List<Product> loadProducts() throws IOException, ClassNotFoundException {
-        File file = new File(PRODUCTS_FILE);
-
-        if (!file.exists()) {
-            return new ArrayList<>();
-        }
-
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
-            return (List<Product>) ois.readObject();
+            return (Container) ois.readObject();
         }
     }
 }

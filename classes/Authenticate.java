@@ -1,7 +1,6 @@
 package classes;
 
 import java.util.List;
-import java.util.ArrayList;
 
 public class Authenticate {
     public static User login(List<User> users, String name, String password) throws Exception{

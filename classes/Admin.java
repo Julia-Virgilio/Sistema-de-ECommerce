@@ -32,7 +32,7 @@ public class Admin extends User{
                         Product.createProduct(scanner, products);
                         break;
                     case 2:
-                        Admin.createUser(scanner, users);
+                        createUser(scanner, users);
                         break;
                     case 3:
                         System.out.println("Returning to main menu.");
@@ -58,10 +58,10 @@ public class Admin extends User{
                 String password = scanner.nextLine();
         
                 System.out.print("Is this user an admin? (yes/no): ");
-                String isAdminInput = scanner.nextLine().trim().toLowerCase();
+                String isAdmin = scanner.nextLine().trim().toLowerCase();
         
                 User newUser;
-                if (isAdminInput.equals("yes")) {
+                if (isAdmin.equals("yes")) {
                     newUser = new Admin(name, email, password);
                 } else {
                     System.out.print("Enter delivery address: ");

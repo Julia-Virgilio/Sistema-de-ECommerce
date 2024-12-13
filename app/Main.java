@@ -4,6 +4,7 @@ import classes.*;
 
 import java.util.Scanner;
 import java.util.List;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Main {
@@ -15,17 +16,13 @@ public class Main {
         User loggedUser = null;
 
         try {
-            products = FileHandler.loadProducts();
+            Container data = FileHandler.loadData();
+            users = data.getUsers();
+            products = data.getProducts();
         } catch (Exception e) {
-            System.out.println("No products found. Starting with an empty list.");
-            products = new ArrayList<>();
-        }
-
-        try {
-            users = FileHandler.loadUsers();
-        } catch (Exception e) {
-            System.out.println("No users found. Starting with an empty list.");
+            System.out.println("Error loading data. Starting with empty lists.");
             users = new ArrayList<>();
+            products = new ArrayList<>();
         }
 
         if (users.isEmpty()) {
@@ -79,21 +76,20 @@ public class Main {
                 }
 
                 if (loggedUser instanceof Admin) {
-                    Admin.adminMenu(scanner, users, products, loggedUser);
+                    ((Admin) loggedUser).adminMenu(scanner, users, products, loggedUser);
 
                 } else if (loggedUser instanceof Customer) {
-                    Customer.customerMenu(scanner, (Customer) loggedUser);
+                    ((Customer) loggedUser).customerMenu(scanner, (Customer) loggedUser, products);
                 }
 
                 login = false;
                 loggedUser = null;
             }
         }
-        try {
-            FileHandler.saveUsers(users);
-            FileHandler.saveProducts(products);
-        } catch (Exception e) {
-            System.out.println("Error saving users: " + e.getMessage());
+         try {
+            FileHandler.saveData(users, products);
+        } catch (IOException e) {
+            System.out.println("Error saving data: " + e.getMessage());
         }
     }
 
