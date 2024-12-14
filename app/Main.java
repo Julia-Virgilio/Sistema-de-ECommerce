@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Main {
-
     public static void main(String[] args) {
         List<User> users;
         List<Product> products;
@@ -51,14 +50,14 @@ public class Main {
             }
 
             if (choice == 2) {
-                System.out.println("Exiting system. Goodbye!");
+                System.out.println("Exiting system. Goodbye.");
                 break;
             }
 
             if (choice == 1) {
                 while (!login) {
                     try {
-                        System.out.println("Welcome! Please login:");
+                        System.out.println("\nWelcome! Please login:");
 
                         System.out.print("Name: ");
                         String email = scanner.nextLine();
@@ -71,7 +70,7 @@ public class Main {
                         login = true;
                     } catch (Exception e) {
                         System.err.println("Error: " + e.getMessage());
-                        System.out.println("Please try again.");
+                        System.out.println("Please try again.\n");
                     }
                 }
 

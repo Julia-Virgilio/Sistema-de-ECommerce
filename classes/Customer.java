@@ -21,6 +21,14 @@ public class Customer extends User{
         return this.cart;
     }
 
+    public List<Order> getShoppingHistory(){
+        return this.shoppingHistory;
+    }
+
+    public String getDeliveryAddress(){
+        return this.deliveryAddress;
+    }
+
     public void customerMenu(Scanner scanner, Customer customer, List<Product> products) {
         int option = 0;
         do {
@@ -49,36 +57,45 @@ public class Customer extends User{
         } while (option != 2);
     }
 
-    public void addProduct(List<Product> products, Scanner scanner){
+    public void addProduct(List<Product> products, Scanner scanner) {
         Product.listProducts(products);
-
-        System.out.println("\nWhich products would you like? Enter it's name!");
+    
+        System.out.println("\nWhich products would you like? Enter its ID!");
         System.out.println("Please, write a single 'X' to exit.");
-
+    
         while (true) {
-        System.out.print("Product name (or 'X' to exit): ");
-        String option = scanner.nextLine().trim();
-
-        if (option.equalsIgnoreCase("X")) {
-            System.out.println("Exiting product selection.");
-            break;
-        }
-
-        Product selectedProduct = null;
-        for (Product p : products) {
-            if (p.getName().equalsIgnoreCase(option)) {
-                selectedProduct = p;
+            String option = scanner.nextLine().trim();
+    
+            if (option.equalsIgnoreCase("x")) {
+                System.out.println("Exiting product selection.");
                 break;
             }
-        }
-
-        if (selectedProduct == null) {
-            System.out.println("Product not found. Please try again.");
-        } else {
-            cart.addProduct(selectedProduct, scanner);
-        }
+    
+            Product selectedProduct = null;
+            int id;
+    
+            try {
+                id = Integer.parseInt(option);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid product ID or 'X' to exit.");
+                continue;
+            }
+    
+            for (Product p : products) {
+                if (p.getId() == id) {
+                    selectedProduct = p;
+                    break;
+                }
+            }
+    
+            if (selectedProduct == null)
+                System.out.println("Product not found. Please try again.");
+             else 
+                cart.addProduct(selectedProduct, scanner);
+            
         }
     }
+    
 
     public void menuOrder(List<Product> products, Scanner scanner) {
         int optionOrder = 0;
@@ -106,7 +123,8 @@ public class Customer extends User{
                     cart.viewCart();
                     break;
                 case 3:
-                
+                    Order order = new Order(this);
+                    order.finishOrder(cart, scanner);
                 case 4:
                     System.out.println("Exiting order menu.");
                     break;

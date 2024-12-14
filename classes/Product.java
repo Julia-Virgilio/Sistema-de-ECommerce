@@ -40,6 +40,10 @@ public class Product implements Serializable {
         return stock;
     }
 
+    public void setStock(int stock){
+        this.stock = stock;
+    }
+
     public static void createProduct(Scanner scanner, List<Product> products) {
         System.out.println("\nCreate new product: ");
 
@@ -58,15 +62,16 @@ public class Product implements Serializable {
 
             System.out.print("How many are available in stock?: ");
             int stock = scanner.nextInt();
-            scanner.nextLine();
 
             Product newProduct = new Product(name, description, price, stock, category);
             products.add(newProduct);
 
-            System.out.println("Product created successfully!\n");
+            System.out.println("\nProduct created successfully!");
 
-            System.out.println(name + "\n" + category + "\n" + description + "\nR$ " + price + 
-                               "\nThere are available " + stock + " of this product.");
+            System.out.println(newProduct.toString());
+
+            scanner.nextLine();
+
         } catch (Exception e) {
             System.out.println("Error creating product: " + e.getMessage());
         }
@@ -78,14 +83,20 @@ public class Product implements Serializable {
         if (products.isEmpty()) {
             System.out.println("There are no products available! Sorry :(");
         } else {
-            for (Product p : products) {
-                System.out.println("\nProduct number " + p.getId() + ":");
-                System.out.println(p.name);
-                System.out.println(p.category);
-                System.out.println(p.description);
-                System.out.println("Price: R$ " + p.price);
-                System.out.println("There are " + p.stock + " available.");
+            for (Product product : products) {
+                System.out.println(product.toString());
             }
         }
     }
+
+    @Override
+public String toString() {
+    return "Product Details:" +
+           "\nID: " + id +
+           "\nName: " + name +
+           "\nDescription: " + description +
+           "\nCategory: " + category +
+           "\nPrice: $ " + price +
+           "\nStock: " + stock;
+}
 }
