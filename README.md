@@ -41,7 +41,7 @@ Este projeto é o back-end simples, **com execução em terminal**, de um sistem
 
 ## Tecnologias utilizadas
 - **Java 11+**
-- **Hashing de senhas** (utilizando [utilizando PBKDF2 com HMAC-SHA1](https://www.baeldung.com/java-password-hashing))
+- **Hashing de senhas** (utilizando [PBKDF2 com HMAC-SHA1](https://www.baeldung.com/java-password-hashing))
 - **Serialização de objetos** (Java built-in)
 
 ## Autor:
