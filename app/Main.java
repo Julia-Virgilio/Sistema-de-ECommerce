@@ -4,6 +4,7 @@ import classes.*;
 
 import java.util.Scanner;
 import java.util.List;
+import java.io.Console;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -62,8 +63,16 @@ public class Main {
                         System.out.print("Name: ");
                         String email = scanner.nextLine();
 
-                        System.out.print("Password: ");
-                        String password = scanner.nextLine();
+                        Console console = System.console();
+                        String password;
+
+                        if (console != null) {
+                            char[] passwordChars = console.readPassword("Password: ");
+                            password = new String(passwordChars);
+                        } else {
+                            System.out.print("Password: ");
+                            password = scanner.nextLine();
+                        }
 
                         loggedUser = Authenticate.login(users, email, password);
 
