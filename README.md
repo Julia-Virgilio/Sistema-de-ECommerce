@@ -1,4 +1,4 @@
-# Trabalho-POO
+# Sistema-de-ECommerce
 Este projeto é o back-end simples, **com execução em terminal**, de um sistema de e-commerce, desenvolvido como parte da disciplina de Programação Orientada a Objetos. Ele foi projetado para gerenciar produtos, usuários e pedidos de uma "loja online", oferecendo funcionalidades básicas para adicionar, finalizar e listar produtos e pedidos, simulando o funcionamento de um e-commerce real.
 
 
@@ -6,7 +6,7 @@ Este projeto é o back-end simples, **com execução em terminal**, de um sistem
 
 1. Clone o repositório:
      ```bash
-     git clone https://github.com/Julia-Virgilio/Trabalho-POO
+     git clone https://github.com/Julia-Virgilio/Sistema-de-ECommerce
 
 2. Entre no diretório:
      ```bash
